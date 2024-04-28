@@ -30,6 +30,7 @@ namespace Locks
     private bool petDoor;
     private bool pensDoor;
     private bool slaveDoor;
+    private bool prisonerDoor;
     private bool childLock;
     private bool animalsAllowed;
 
@@ -83,6 +84,10 @@ namespace Locks
       if (Data.WantedState.IsVisible(nameof(LockState.allowSlave)))
       {
         CheckboxLabeled(listing, ref anythingChanged, "Locks_ITabSlaveDoors".Translate(), ref slaveDoor, "Locks_ITabSlaveDoorsDesc".Translate());
+      }
+      if (Data.WantedState.IsVisible(nameof(LockState.allowPrisoner)))
+      {
+        CheckboxLabeled(listing, ref anythingChanged, "Locks_ITabPrisonerDoors".Translate(), ref prisonerDoor, "Locks_ITabSlaveDoorsDesc".Translate());
       }
       if (Data.WantedState.IsVisible(nameof(LockState.mode)))
         CheckboxLabeled(listing, ref anythingChanged, "Locks_ITabVisitorsAllowed".Translate(), ref vistitorsAllowed, "Locks_ITabVisitorsAllowedDesc".Translate());
@@ -179,7 +184,7 @@ namespace Locks
       {
         if (anythingChanged)
         {
-          var newState = new LockState(vistitorsAllowed ? LockMode.Allies : LockMode.Colony, locked, petDoor, pensDoor, null, slaveDoor, animalsAllowed)
+          var newState = new LockState(vistitorsAllowed ? LockMode.Allies : LockMode.Colony, locked, petDoor, pensDoor, null, slaveDoor, animalsAllowed, prisonerDoor)
           {
             childLock = childLock
           };
@@ -200,6 +205,7 @@ namespace Locks
       petDoor = Data.WantedState.petDoor;
       pensDoor = Data.WantedState.pensDoor;
       slaveDoor = Data.WantedState.allowSlave;
+      prisonerDoor = Data.WantedState.allowPrisoner;
       animalsAllowed = Data.WantedState.allowAnimals;
       childLock = Data.WantedState.childLock;
     }

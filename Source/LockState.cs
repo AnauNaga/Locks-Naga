@@ -17,6 +17,7 @@ namespace Locks
     public LockMode mode;
     public bool locked;
     public bool allowSlave;
+    public bool allowPrisoner;
     public bool petDoor;
     public bool pensDoor;
     public bool allowAnimals;
@@ -24,7 +25,7 @@ namespace Locks
     public List<Pawn> owners;
 
     public LockState(LockMode mode, bool locked, bool petDoor, bool pensDoor, List<Pawn> owners,
-        bool allowSlave = true, bool allowAnimals = true)
+        bool allowSlave = true, bool allowAnimals = true, bool allowPrisoner = false)
     {
       this.mode = mode;
       this.locked = locked;
@@ -33,6 +34,7 @@ namespace Locks
       this.owners = owners;
       childLock = false;
       this.allowSlave = allowSlave;
+      this.allowPrisoner = allowPrisoner;
       this.allowAnimals = allowAnimals;
     }
 
@@ -46,6 +48,7 @@ namespace Locks
       owners.AddRange(copy.owners);
 
       allowSlave = copy.allowSlave;
+      allowPrisoner = copy.allowPrisoner;
       allowAnimals = copy.allowAnimals;
 
       childLock = copy.childLock;
@@ -70,6 +73,10 @@ namespace Locks
         return false;
       }
       if (a.allowSlave != b.allowSlave)
+      {
+        return false;
+      }
+      if (a.allowPrisoner != b.allowPrisoner)
       {
         return false;
       }
@@ -119,6 +126,7 @@ namespace Locks
       Scribe_Values.Look(ref pensDoor, $"Locks_LockData_PensDoor_{postfix}", false, false);
 
       Scribe_Values.Look(ref allowSlave, $"Locks_LockData_SlaveDoor_{postfix}", true, false);
+      Scribe_Values.Look(ref allowPrisoner, $"Locks_LockData_PrisonerDoor_{postfix}", true, false) ;
       Scribe_Values.Look(ref allowAnimals, $"Locks_LockData_NonAnimalDoor_{postfix}", true, false);
 
       Scribe_Values.Look(ref childLock, $"Locks_LockData_ChildLock_{postfix}", false, false);

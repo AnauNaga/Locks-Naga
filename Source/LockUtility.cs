@@ -112,6 +112,10 @@ namespace Locks
       {
         return true;
       }
+      if (respectedState.allowPrisoner && p.IsPrisoner)
+      {
+        return true;
+      }
 
       bool guestCondition = p.GuestStatus == GuestStatus.Guest || !p.IsPrisoner && !p.IsSlave && p.HostFaction != door.Faction;
       if (respectedState.mode == LockMode.Allies && guestCondition)
@@ -203,6 +207,8 @@ namespace Locks
         case nameof(LockState.allowAnimals):
           return state.locked;
         case nameof(LockState.allowSlave):
+          return state.locked;
+        case nameof(LockState.allowPrisoner):
           return state.locked;
         case nameof(LockState.childLock):
           return state.locked;

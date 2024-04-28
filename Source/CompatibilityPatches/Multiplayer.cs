@@ -36,6 +36,7 @@ namespace Locks.CompatibilityPatches
             sync.Bind(ref state.mode);
             sync.Bind(ref state.locked);
             sync.Bind(ref state.allowSlave);
+            sync.Bind(ref state.allowPrisoner);
             sync.Bind(ref state.petDoor);
             sync.Bind(ref state.pensDoor);
             sync.Bind(ref state.allowAnimals);
